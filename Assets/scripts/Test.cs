@@ -7,12 +7,20 @@ public class Test : MonoBehaviour
    
     private Vector3 initialPos = new Vector3(0,0,0);
 
+
     private void Start()
     {
         transform.position = initialPos;
+        
     }
 
     private void Update()
+    {
+        Movement();
+    }
+
+
+    private void Movement() //Movimiento de cada tecla
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -31,4 +39,5 @@ public class Test : MonoBehaviour
             transform.position += new Vector3Int(1, -1, 0);
         }
     }
+
 }
