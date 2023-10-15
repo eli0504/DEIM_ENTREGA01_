@@ -8,24 +8,26 @@ public class Frogger : MonoBehaviour
     private Vector3 moveDirection; 
     private Vector3 position;
 
-    // El jugador se moverá a cada 2 segundos
+    private UnityEngine.KeyCode prohibitedMovement; //variable so you can't go back
+
+    // The player will move every 2 seconds
     private float moveTimer;
     private float moveTimerMax = 2f; 
 
-    private void Awake()
+    private void Awake() //As soon as the game is executed, the player is positioned at (0, 0, 0)
     {
         startPosition = new Vector3(0, 0, 0); 
         position = startPosition;
     }
 
     
-    private void Update() //llamamos el movimiento en el Update para que se mueva en cada frame
+    private void Update() //we call the movement in the Update so that it moves in each frame
     {
         Movement();
         Direction();
     }
 
-    private void Movement() //se moverá cada 2 segundos
+    private void Movement() //the player will move every 2 seconds
     {
         moveTimer += Time.deltaTime;
         if (moveTimer >= moveTimerMax)
@@ -38,39 +40,80 @@ public class Frogger : MonoBehaviour
         }
     }
 
-    private void Direction() //direcciones correspondientes a cada tecla
+    private void Direction() //directions corresponding to each key
     {
-        //dirección arriba derecha
-       
-            if (Input.GetKeyDown(KeyCode.Q))
+        //direction top right
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+
+            if (prohibitedMovement != KeyCode.Q) //you cannot go backwards
             {
                 moveDirection.x = -1;
                 moveDirection.y = 1;
-            }
-        
-        //dirección arriba izq
 
-            if (Input.GetKeyDown(KeyCode.E))
+                prohibitedMovement = KeyCode.D;
+            }
+            else
+            {
+                Debug.Log("You cannot return to the previous position"); 
+            }
+        }
+
+        //direction up left
+
+        else if (Input.GetKeyDown(KeyCode.E))
+         {
+
+            if (prohibitedMovement != KeyCode.E)
             {
                 moveDirection.x = 1;
                 moveDirection.y = 1;
-            }
-        
-        //dirección abajo der
 
-            if (Input.GetKeyDown(KeyCode.A))
+                prohibitedMovement = KeyCode.A;
+            }
+            else
+            {
+                Debug.Log("You cannot return to the previous position"); 
+            }
+        }
+
+        //direction bottom right
+
+        else if (Input.GetKeyDown(KeyCode.A))
+         {
+
+            if (prohibitedMovement != KeyCode.A)
             {
                 moveDirection.x = -1;
                 moveDirection.y = -1;
-            }
-        
-        //dirección abajo izq
 
-            if (Input.GetKeyDown(KeyCode.D))
+                prohibitedMovement = KeyCode.E;
+            }
+            else
+            {
+                Debug.Log("You cannot return to the previous position");
+            }
+
+        }
+
+        //direction down left
+
+        else if (Input.GetKeyDown(KeyCode.D))
+         {
+
+            if (prohibitedMovement != KeyCode.D)
             {
                 moveDirection.x = 1;
                 moveDirection.y = -1;
+
+                prohibitedMovement = KeyCode.Q;
+             }
+            else
+            {
+                Debug.Log("You cannot return to the previous position");
             }
+        } 
     }
 
 }
